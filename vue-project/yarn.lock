@@ -4191,6 +4191,11 @@ mkdirp@^0.5.5:
   dependencies:
     minimist "^1.2.6"
 
+mobx-vue@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/mobx-vue/-/mobx-vue-2.2.0.tgz#ba93b02ff3733b975977a6478b80200d7eab1519"
+  integrity sha512-f0D04IzHCG8MTePdHjka34crF6dKha6FVDOTgahTMwT5kJAN7p0qNePHucNM9rtGRVkdrynY7PkJLmyU2MywNA==
+
 mobx@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.6.0.tgz#617ca1f3b745a781fa89c5eb94a773e3cbeff8ae"

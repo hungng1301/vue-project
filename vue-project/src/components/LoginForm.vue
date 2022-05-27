@@ -60,7 +60,7 @@ export default class LoginForm extends Vue {
   login() {
     if (this.username != "" && this.password != "") {
       if (this.username == "admin" && this.password == "admin") {
-        localStorage.setItem("CurAcc", this.username);
+        sessionStorage.setItem("CurAcc", this.username);
         // this.checkLogin = true
         this.$router.replace({ name: "main" });
       } else {

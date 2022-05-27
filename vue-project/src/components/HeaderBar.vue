@@ -46,11 +46,11 @@ import Login from "../components/LoginForm.vue";
 
 @Component
 export default class HeaderBar extends Vue {
-  getSession = localStorage.getItem("CurAcc");
+  getSession = sessionStorage.getItem("CurAcc");
   model = "";
 
   logout() {
-    localStorage.removeItem("CurAcc");
+    sessionStorage.removeItem("CurAcc");
   }
 }
 </script>

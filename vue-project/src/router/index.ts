@@ -15,18 +15,25 @@ const routes: Array<RouteConfig> = [
     component: HomeView,
     children: [
       { path: '', name: 'main', component: MainContent },
-      { path: '/employee', name: 'employee', component: Employee },
-      { path: '/employee/:id', name: 'detail', component: EmployeeDetail}
+      {
+        path: '/employee', name: 'employee', component: Employee, 
+        beforeEnter(to, from, next) {
+          if (sessionStorage.getItem("CurAcc")) {
+            next()
+          } else {
+            next('/login')
+          }
+        }
+      },
+      {
+        path: '/employee/:id', name: 'detail', component: EmployeeDetail
+      }
     ]
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: LoginForm
-    // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
 
 ]

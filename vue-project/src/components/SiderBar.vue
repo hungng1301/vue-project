@@ -11,16 +11,7 @@
           </v-list-item>
         </router-link>
 
-        <router-link v-if="getSession" :to="{ name: 'employee' }">
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>mdi-account-multiple</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Employee List</v-list-item-title>
-          </v-list-item>
-        </router-link>
-
-        <router-link v-else :to="{ name: 'login' }">
+        <router-link :to="{ name: 'employee' }">
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-account-multiple</v-icon>
@@ -43,7 +34,6 @@ import MainContent from "../components/MainContent.vue";
   },
 })
 export default class Siderbar extends Vue {
-  getSession = localStorage.getItem("CurAcc");
 }
 </script>
 

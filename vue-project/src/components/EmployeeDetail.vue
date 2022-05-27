@@ -61,10 +61,12 @@
 <script lang="ts">
 import { Vue, Component, Emit, Prop } from "vue-property-decorator";
 import Employee, { emp } from "../model/Employee";
+import {observer} from 'mobx-vue'
 
+@observer
 @Component
 export default class EmployeeDetail extends Vue {
-  @Prop(Array) readonly employeesList: Employee[] = [];
+  @Prop(Array) readonly employeesList!: Employee[];
 
   id = 0;
   name = "";
@@ -95,7 +97,7 @@ export default class EmployeeDetail extends Vue {
 
     if (this.name && this.age && this.salary && this.departmentId) {
       if (this.age > 20) {
-        const e = emp.find((em) => em.id == CurEmp.id) as Employee;
+        const e = emp.employeeList.find((em) => em.id == CurEmp.id) as Employee;
         e.name = CurEmp.name;
         e.age = CurEmp.age;
         e.salary = CurEmp.salary;
@@ -103,7 +105,7 @@ export default class EmployeeDetail extends Vue {
       
         alert("Update Successfully");
         this.$router.push("/employee");
-        return emp;
+        return emp.employeeList;
       } else {
         alert("Age must be older than 20");
       }

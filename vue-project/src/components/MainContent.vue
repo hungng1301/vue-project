@@ -66,7 +66,7 @@ import Department, { dep } from "../model/Department";
 
 @Component
 export default class MainContent extends Vue {
-  @Prop(Array) readonly employeesList: Employee[] = [];
+  @Prop(Array) readonly employeesList!: Employee[];
 
   top10: Employee[] = [];
   employeeListOfDepartment: Employee[] = [];
@@ -87,7 +87,7 @@ export default class MainContent extends Vue {
 
   getEmployeesFromHighestSalaryDepartment() {
 
-    this.departmentList = dep;
+    this.departmentList = dep.departmentList;
     this.employeeListOfDepartment = this.employeesList;
 
     var hightSalary = 0;

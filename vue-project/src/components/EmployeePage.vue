@@ -28,13 +28,15 @@
 </template>
 
 <script lang="ts">
+import { observe } from "mobx";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import DepartmentStore from "../model/Department";
 import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
 
 @Component
-export default class Employees extends Vue {
-  @Prop(Array) readonly employeesList: Employee[] = [];
+export default class Employees extends Vue{
+  @Prop(Array) readonly employeesList!: Employee[];
   departmentList: Department[] = [];
   depListFound: Department[] = [];
   empListFound: Employee[] = [];
@@ -50,7 +52,7 @@ export default class Employees extends Vue {
   ];
 
   created() {
-    this.departmentList = dep;
+    this.departmentList = dep.departmentList;
   }
 
   getEmployeeById(rowEmp: any) {

@@ -27,10 +27,10 @@ import Employee, { emp } from "../model/Employee";
   },
 })
 export default class HomePage extends Vue {
-  employeesList!: Array<Employee>;
+  employeesList: Employee[] = [];
 
   created() {
-    this.employeesList = emp;
+    this.employeesList = emp.employeeList;
   }
 
   reloadEmpList(empList: any) {
