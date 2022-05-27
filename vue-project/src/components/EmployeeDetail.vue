@@ -60,12 +60,11 @@
 
 <script lang="ts">
 import { Vue, Component, Emit, Prop } from "vue-property-decorator";
-import Data from "../assets/data";
-import Employee from "../model/Employee";
+import Employee, { emp } from "../model/Employee";
 
 @Component
 export default class EmployeeDetail extends Vue {
-  @Prop(Array) readonly employeesList!: Array<Employee>;
+  @Prop(Array) readonly employeesList: Employee[] = [];
 
   id = 0;
   name = "";
@@ -74,7 +73,6 @@ export default class EmployeeDetail extends Vue {
   departmentId = 0;
 
   created() {
-    const data = new Data();
     var pId = parseInt(this.$route.params.id);
     var CurEmp = this.employeesList.find((emp) => emp.id === pId);
 
@@ -87,25 +85,25 @@ export default class EmployeeDetail extends Vue {
 
   @Emit("reloadEmpList")
   updateEmployee() {
-    const CurEmp = new Employee(
-      this.id,
-      this.name,
-      this.age,
-      this.salary,
-      this.departmentId
-    );
+    const CurEmp : Employee = {
+      id : this.id,
+      name : this.name,
+      age : this.age,
+      salary : this.salary,
+      departmentId : this.departmentId
+    }
 
-    const data = new Data();
     if (this.name && this.age && this.salary && this.departmentId) {
       if (this.age > 20) {
-        const e = data.employee.find((em) => em.id == CurEmp.id) as Employee;
-        e.setName(CurEmp.getName());
-        e.setAge(CurEmp.getAge());
-        e.setSalary(CurEmp.getSalary());
-        e.setDepartment(CurEmp.getDepartment());
+        const e = emp.find((em) => em.id == CurEmp.id) as Employee;
+        e.name = CurEmp.name;
+        e.age = CurEmp.age;
+        e.salary = CurEmp.salary;
+        e.departmentId = CurEmp.departmentId;
+      
         alert("Update Successfully");
         this.$router.push("/employee");
-        return data.employee;
+        return emp;
       } else {
         alert("Age must be older than 20");
       }

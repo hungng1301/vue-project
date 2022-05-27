@@ -17,8 +17,8 @@ import HeaderBar from "../components/HeaderBar.vue";
 import SiderBar from "../components/SiderBar.vue";
 import FooterBar from "../components/FooterBar.vue";
 import { Vue, Component } from "vue-property-decorator";
-import Employee from "../model/Employee";
-import Data from "../assets/data";
+import Employee, { emp } from "../model/Employee";
+
 @Component({
   components: {
     HeaderBar,
@@ -30,8 +30,7 @@ export default class HomePage extends Vue {
   employeesList!: Array<Employee>;
 
   created() {
-    const data = new Data();
-    this.employeesList = data.employee;
+    this.employeesList = emp;
   }
 
   reloadEmpList(empList: any) {

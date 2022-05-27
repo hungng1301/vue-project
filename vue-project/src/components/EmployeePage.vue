@@ -29,16 +29,15 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-import Data from "../assets/data";
-import Department from "../model/Department";
+import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
 
 @Component
 export default class Employees extends Vue {
-  @Prop(Array) readonly employeesList!: Array<Employee>;
-  departmentList: Array<Department> = [];
-  depListFound: Array<Department> = [];
-  empListFound: Array<Employee> = [];
+  @Prop(Array) readonly employeesList: Employee[] = [];
+  departmentList: Department[] = [];
+  depListFound: Department[] = [];
+  empListFound: Employee[] = [];
 
   searchInput = "";
 
@@ -51,8 +50,7 @@ export default class Employees extends Vue {
   ];
 
   created() {
-    const data = new Data();
-    this.departmentList = data.departmentData();
+    this.departmentList = dep;
   }
 
   getEmployeeById(rowEmp: any) {

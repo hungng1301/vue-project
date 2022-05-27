@@ -61,19 +61,18 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Data from "../assets/data";
 import Employee from "../model/Employee";
-import Department from "../model/Department";
+import Department, { dep } from "../model/Department";
 
 @Component
 export default class MainContent extends Vue {
-  @Prop(Array) readonly employeesList!: Array<Employee>;
+  @Prop(Array) readonly employeesList: Employee[] = [];
 
-  top10!: Array<Employee>;
-  employeeListOfDepartment: Array<Employee> = [];
+  top10: Employee[] = [];
+  employeeListOfDepartment: Employee[] = [];
 
-  departmentList: Array<Department> = [];
-  departmentWithSalary: Array<Department> = [];
+  departmentList: Department[] = [];
+  departmentWithSalary: Department[] = [];
 
   created() {
     this.getTopEmployees();
@@ -82,14 +81,13 @@ export default class MainContent extends Vue {
 
   getTopEmployees() {
     this.top10 = this.employeesList
-      .sort((a, b) => b.getSalary() - a.getSalary())
+      .sort((a, b) => b.salary - a.salary)
       .slice(0, 10);
   }
 
   getEmployeesFromHighestSalaryDepartment() {
-    const data = new Data();
 
-    this.departmentList = data.departmentData();
+    this.departmentList = dep;
     this.employeeListOfDepartment = this.employeesList;
 
     var hightSalary = 0;

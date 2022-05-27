@@ -1,25 +1,19 @@
-export default class Department {
-    id!: number;
-    name!: string;
-
-    constructor(id: number, name: string) {
-        this.id = id;
-        this.name = name
-    }
-
-    public setId(id: number) {
-        this.id = id
-    }
-
-    public setName(name: string) {
-        this.name = name
-    }
-
-    public getId() {
-        return this.id
-    }
-
-    public getName() {
-        return this.name
-    }
+export default interface Department {
+    id: number;
+    name: string;
 }
+
+export const dep: Department[] = [
+    {
+        id: 1,
+        name: 'Manchester United'
+    },
+    {
+        id: 2,
+        name: 'Real Mandrid'
+    },
+    {
+        id: 3,
+        name: 'Paris Saint-Germain'
+    }
+]
