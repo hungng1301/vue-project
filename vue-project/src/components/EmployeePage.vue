@@ -28,9 +28,7 @@
 </template>
 
 <script lang="ts">
-import { observe } from "mobx";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-import DepartmentStore from "../model/Department";
 import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
 

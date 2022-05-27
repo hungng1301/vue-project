@@ -42,7 +42,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Login from "../components/LoginForm.vue";
 
 @Component
 export default class HeaderBar extends Vue {
