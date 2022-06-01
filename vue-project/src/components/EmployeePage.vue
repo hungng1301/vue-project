@@ -36,15 +36,16 @@
 </template>
 
 <script lang="ts">
+import { observer } from "mobx-vue";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
 
+@observer
 @Component
 export default class Employees extends Vue {
   @Prop(Array) readonly employeesList!: Employee[];
   departmentList: Department[] = [];
-  depListFound: Department[] = [];
   empListFound: Employee[] = [];
 
   searchInput = "";
@@ -69,22 +70,9 @@ export default class Employees extends Vue {
   }
 
   @Watch("searchInput")
-  search() {
-    if (this.searchInput !== null) {
-      var searchId = 0;
-      this.depListFound = this.departmentList.filter((dep) =>
-        dep.name.includes(this.searchInput)
-      );
-      this.depListFound.map((dep) => {
-        searchId = dep.id;
-        this.empListFound = this.employeesList.filter(
-          (emp) => emp.departmentId == searchId
-        );
-        return this.empListFound;
-      });
-    } else {
-      this.empListFound.length = 0;
-    }
+  searchEmp() {
+    dep.search(this.searchInput);
+    this.empListFound = dep.empListFound;
   }
 }
 </script>

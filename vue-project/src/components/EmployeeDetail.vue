@@ -47,7 +47,7 @@
               </router-link>
 
               <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="updateEmployee()">
+              <v-btn color="primary" text @click="update()">
                 Update
               </v-btn>
             </v-card-actions>
@@ -61,12 +61,13 @@
 <script lang="ts">
 import { Vue, Component, Emit, Prop } from "vue-property-decorator";
 import Employee, { emp } from "../model/Employee";
-import {observer} from 'mobx-vue'
+import { observer } from "mobx-vue";
 
 @observer
 @Component
 export default class EmployeeDetail extends Vue {
   @Prop(Array) readonly employeesList!: Employee[];
+  updateList: Employee[] = []
 
   id = 0;
   name = "";
@@ -75,9 +76,12 @@ export default class EmployeeDetail extends Vue {
   departmentId = 0;
 
   created() {
-    var pId = parseInt(this.$route.params.id);
-    var CurEmp = this.employeesList.find((emp) => emp.id === pId);
+    this.getEmp();
+  }
 
+  getEmp() {
+    var pId = parseInt(this.$route.params.id);
+    var CurEmp = emp.getEmpById(pId);
     this.id = CurEmp!.id;
     this.name = CurEmp!.name;
     this.age = CurEmp!.age;
@@ -86,26 +90,21 @@ export default class EmployeeDetail extends Vue {
   }
 
   @Emit("reloadEmpList")
-  updateEmployee() {
-    const CurEmp : Employee = {
-      id : this.id,
-      name : this.name,
-      age : this.age,
-      salary : this.salary,
-      departmentId : this.departmentId
-    }
+  update() {
+    const UpdateEmp: Employee = {
+      id: this.id,
+      name: this.name,
+      age: this.age,
+      salary: this.salary,
+      departmentId: this.departmentId,
+    };
 
     if (this.name && this.age && this.salary && this.departmentId) {
       if (this.age > 20) {
-        const e = emp.employeeList.find((em) => em.id == CurEmp.id) as Employee;
-        e.name = CurEmp.name;
-        e.age = CurEmp.age;
-        e.salary = CurEmp.salary;
-        e.departmentId = CurEmp.departmentId;
-      
+        this.updateList = emp.updateEmployee(UpdateEmp);
         alert("Update Successfully");
         this.$router.push("/employee");
-        return emp.employeeList;
+        return this.updateList
       } else {
         alert("Age must be older than 20");
       }

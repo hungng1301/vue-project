@@ -16,15 +16,9 @@
               tile
               align="center"
             >
-              <div align="center" justify="center">
-                Name: {{ e.name }}
-              </div>
-              <div align="center" justify="center">
-                Age: {{ e.age }}
-              </div>
-              <div align="center" justify="center">
-                Salary: {{ e.salary }}
-              </div>
+              <div align="center" justify="center">Name: {{ e.name }}</div>
+              <div align="center" justify="center">Age: {{ e.age }}</div>
+              <div align="center" justify="center">Salary: {{ e.salary }}</div>
             </v-card>
           </v-row>
         </v-col>
@@ -42,15 +36,9 @@
               v-for="ed in employeeListOfDepartment"
               :key="ed.id"
             >
-              <div align="center" justify="center">
-                Name: {{ ed.name }}
-              </div>
-              <div align="center" justify="center">
-                Age: {{ ed.age }}
-              </div>
-              <div align="center" justify="center">
-                Salary: {{ ed.salary }}
-              </div>
+              <div align="center" justify="center">Name: {{ ed.name }}</div>
+              <div align="center" justify="center">Age: {{ ed.age }}</div>
+              <div align="center" justify="center">Salary: {{ ed.salary }}</div>
             </v-card>
           </v-row>
         </v-col>
@@ -61,18 +49,18 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Employee from "../model/Employee";
+import Employee, { emp } from "../model/Employee";
 import Department, { dep } from "../model/Department";
+import { observer } from "mobx-vue";
 
+@observer
 @Component
 export default class MainContent extends Vue {
   @Prop(Array) readonly employeesList!: Employee[];
 
   top10: Employee[] = [];
   employeeListOfDepartment: Employee[] = [];
-
   departmentList: Department[] = [];
-  departmentWithSalary: Department[] = [];
 
   created() {
     this.getTopEmployees();
@@ -80,33 +68,13 @@ export default class MainContent extends Vue {
   }
 
   getTopEmployees() {
-    this.top10 = this.employeesList
-      .sort((a, b) => b.salary - a.salary)
-      .slice(0, 10);
-    return this.top10
+    emp.getTopEmployee();
+    this.top10 = emp.top10
   }
 
   getEmployeesFromHighestSalaryDepartment() {
-
-    this.departmentList = dep.departmentList;
-    this.employeeListOfDepartment = this.employeesList;
-
-    var hightSalary = 0;
-    var hightdepId = 0;
-    this.departmentList.map((dep) => {
-      const totalSalary = this.employeeListOfDepartment
-        .filter((emp) => emp.departmentId == dep.id)
-        .reduce(function (sum, value) {
-          return sum + value.salary;
-        }, 0);
-      if (hightSalary < totalSalary) {
-        (hightSalary = totalSalary), (hightdepId = dep.id);
-      }
-    });
-    this.employeeListOfDepartment = this.employeeListOfDepartment.filter(
-      (emp) => emp.departmentId == hightdepId
-    );
-    return this.employeeListOfDepartment;
+    emp.getEmployeesFromHighestSalaryDepartment();
+    this.employeeListOfDepartment = emp.employeeListOfDepartment
   }
 }
 </script>

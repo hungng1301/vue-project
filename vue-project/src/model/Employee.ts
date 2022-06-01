@@ -1,4 +1,5 @@
-import { observable } from "mobx";
+import { action, observable } from "mobx";
+import Department, { dep } from "./Department";
 
 export default interface Employee {
     id: number;
@@ -115,10 +116,55 @@ export class EmployeeStore {
             age: 32,
             salary: 1900,
             departmentId: 3
-        },  
+        },
     ]
+    @observable top10: Employee[] = [];
+    @observable employeeListOfDepartment: Employee[] = [];
+    @observable departmentList: Department[] = [];
+
+    @action.bound getTopEmployee() {
+        this.top10 = this.employeeList
+            .sort((a, b) => b.salary - a.salary)
+            .slice(0, 10);
+        return this.top10
+    }
+
+    @action.bound getEmployeesFromHighestSalaryDepartment() {
+        this.employeeListOfDepartment = this.employeeList
+        this.departmentList = dep.departmentList
+        let hightSalary = 0;
+        let hightdepId = 0;
+
+        this.departmentList.map((dep) => {
+            const totalSalary = this.employeeListOfDepartment
+                .filter((emp) => emp.departmentId == dep.id)
+                .reduce(function (sum, value) {
+                    return sum + value.salary;
+                }, 0);
+            if (hightSalary < totalSalary) {
+                (hightSalary = totalSalary), (hightdepId = dep.id);
+            }
+        });
+        this.employeeListOfDepartment = this.employeeListOfDepartment.filter(
+            (emp) => emp.departmentId == hightdepId
+        );
+        return this.employeeListOfDepartment;
+    }
+
+    @action.bound getEmpById(eid: number) {
+        const CurEmp = this.employeeList.find((emp) => emp.id === eid);
+        return CurEmp
+    }
+
+    @action.bound updateEmployee(EmpUpdate: Employee) {
+        const e = this.employeeList.find((em) => em.id == EmpUpdate.id) as Employee
+        e.name = EmpUpdate.name;
+        e.age = EmpUpdate.age;
+        e.salary = EmpUpdate.salary;
+        e.departmentId = EmpUpdate.departmentId;
+        return this.employeeList;
+    }
 }
 
 export const emp = new EmployeeStore()
 
-    

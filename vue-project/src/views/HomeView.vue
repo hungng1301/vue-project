@@ -28,11 +28,9 @@ import Employee, { emp } from "../model/Employee";
 })
 export default class HomePage extends Vue {
   employeesList: Employee[] = [];
-  show!: boolean
 
   created() {
     this.employeesList = emp.employeeList;
-    this.show = false
   }
 
   reloadEmpList(empList: any) {
