@@ -18,11 +18,19 @@
         <v-data-table
           :headers="headers"
           :items="empListFound.length == 0 ? employeesList : empListFound"
+          sort-by="id"
           class="elevation-1"
           @click:row="getEmployeeById"
+          hide-default-footer
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @page-count="pageCount = $event"
         >
         </v-data-table>
       </v-card>
+      <div class="pt-3">
+        <v-pagination v-model="page" :length="pageCount"> </v-pagination>
+      </div>
     </v-container>
   </v-main>
 </template>
@@ -33,13 +41,16 @@ import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
 
 @Component
-export default class Employees extends Vue{
+export default class Employees extends Vue {
   @Prop(Array) readonly employeesList!: Employee[];
   departmentList: Department[] = [];
   depListFound: Department[] = [];
   empListFound: Employee[] = [];
 
   searchInput = "";
+  page = 1;
+  itemsPerPage = 10;
+  pageCount = 0;
 
   headers: any[] = [
     { text: "ID", value: "id" },

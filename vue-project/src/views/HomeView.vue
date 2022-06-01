@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <header-bar></header-bar>
-    <div style="display: flex;">
+    <div style="display: flex">
       <sider-bar></sider-bar>
       <router-view
-        :employees-list="employeesList"
-        @reloadEmpList="reloadEmpList"
+        :employees-list="employeesList"       
+        @reloadEmpList="reloadEmpList"       
       />
     </div>
     <footer-bar></footer-bar>
@@ -28,9 +28,11 @@ import Employee, { emp } from "../model/Employee";
 })
 export default class HomePage extends Vue {
   employeesList: Employee[] = [];
+  show!: boolean
 
   created() {
     this.employeesList = emp.employeeList;
+    this.show = false
   }
 
   reloadEmpList(empList: any) {

@@ -1,52 +1,64 @@
 <template>
-  <v-container >
+  <v-container>
     <!-- <v-card color="grey lighten-4" flex> -->
-      <!-- <v-system-bar color="white"></v-system-bar> -->
-      <v-toolbar height="100">
-        <router-link :to="{ name: 'main' }">
-          <v-img src="../assets/logo.png" max-width="80" max-height="80" />
-        </router-link>
+    <!-- <v-system-bar color="white"></v-system-bar> -->
+    <v-toolbar flat>
+      <v-app-bar-nav-icon
+        class="d-flex d-lg-none d-xl-none d-md-none"
+        @click.stop="showSider()"
+      ></v-app-bar-nav-icon>
 
-        <v-toolbar-title>VUEJS</v-toolbar-title>
+      <router-link :to="{ name: 'main' }">
+        <v-img src="../assets/logo.png" max-width="70" max-height="70" />
+      </router-link>
 
-        <v-spacer></v-spacer>
+      <v-toolbar-title>VUEJS</v-toolbar-title>
 
-        <v-menu bottom left>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on">
-              <v-icon class="ma-5">mdi-account-circle</v-icon>
-              Hello {{ getSession }}
-              <v-icon> mdi-chevron-down</v-icon>
-            </v-btn>
-          </template>
+      <v-spacer></v-spacer>
 
-          <v-list>
-            <v-list-item>
-              <v-list-item-title>
-                <router-link v-if="!getSession" :to="{ name: 'login' }">
-                  <v-icon class="ma-5">mdi-login</v-icon>
-                  <span>Login</span>
-                </router-link>
-                <router-link v-else :to="{ name: 'login' }">
-                  <v-icon class="ma-5">mdi-logout</v-icon>
-                  <span @click="logout()">Logout</span>
-                </router-link>
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-toolbar>
+      <v-menu bottom left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text v-bind="attrs" v-on="on">
+            <v-icon class="ma-5">mdi-account-circle</v-icon>
+            Hello {{ getSession }}
+            <v-icon> mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>
+              <router-link v-if="!getSession" :to="{ name: 'login' }">
+                <v-icon class="ma-5">mdi-login</v-icon>
+                <span>Login</span>
+              </router-link>
+              <router-link v-else :to="{ name: 'login' }">
+                <v-icon class="ma-5">mdi-logout</v-icon>
+                <span @click="logout()">Logout</span>
+              </router-link>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-toolbar>
     <!-- </v-card> -->
   </v-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Emit, Prop } from "vue-property-decorator";
+import {bus} from "../main";
 
 @Component
 export default class HeaderBar extends Vue {
   getSession = sessionStorage.getItem("CurAcc");
+  drawer = false
   model = "";
+
+  showSider() {
+    this.drawer = true
+    bus.$emit('showSider', this.drawer) 
+  }
 
   logout() {
     sessionStorage.removeItem("CurAcc");

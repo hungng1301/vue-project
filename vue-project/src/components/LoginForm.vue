@@ -27,7 +27,7 @@
                     placeholder="password"
                     required
                   ></v-text-field>
-                  <!-- <router-link :to="{name: 'home'}"> -->
+
                   <v-btn
                     v-on:click="login()"
                     type="submit"
@@ -36,7 +36,6 @@
                     value="log in"
                     >Login</v-btn
                   >
-                  <!-- </router-link> -->
                 </form>
               </v-card-text>
             </v-card>
@@ -55,13 +54,11 @@ import VueRouter, { Route } from 'vue-router'
 export default class LoginForm extends Vue {
   username = "";
   password = "";
-  // checkLogin = false
 
   login() {
     if (this.username != "" && this.password != "") {
       if (this.username == "admin" && this.password == "admin") {
         sessionStorage.setItem("CurAcc", this.username);
-        // this.checkLogin = true
         this.$router.replace({ name: "main" });
       } else {
         alert("Username or Password is incorrect")

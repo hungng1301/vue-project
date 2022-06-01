@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 
 // import Home from './views/HomeView.vue'
 // Vue.component('default-layout', Home) 
-
+export const bus = new Vue()
 new Vue({
   router,
   vuetify,

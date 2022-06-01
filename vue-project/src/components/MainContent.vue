@@ -31,7 +31,7 @@
       </v-row>
       <v-row justify="center">
         <v-col class="grey lighten-5" cols="12" xl="6" lg="8" md="8" sm="8">
-          <h3>Top salary</h3>
+          <h3>Top Salary</h3>
           <v-row class="pa-5 flex-row" outlined tile>
             <v-card
               width="170"
@@ -83,6 +83,7 @@ export default class MainContent extends Vue {
     this.top10 = this.employeesList
       .sort((a, b) => b.salary - a.salary)
       .slice(0, 10);
+    return this.top10
   }
 
   getEmployeesFromHighestSalaryDepartment() {
