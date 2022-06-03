@@ -3,10 +3,10 @@
     <header-bar></header-bar>
     <div style="display: flex">
       <sider-bar></sider-bar>
-      <router-view
-        :employees-list="employeesList"       
-        @reloadEmpList="reloadEmpList"       
-      />
+        <router-view
+          :employees-list="employeesList"
+          @reloadEmpList="reloadEmpList"
+        />
     </div>
     <footer-bar></footer-bar>
   </v-app>

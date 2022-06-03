@@ -1,56 +1,52 @@
 <template>
-  <v-main class="grey lighten-5">
+  <v-container class="grey lighten-5">
+    <h3>Top Employees</h3>
     <v-container class="grey lighten-5">
       <!-- Columns are always 50% wide, on mobile and desktop -->
-      <v-row justify="center">
-        <v-col class="grey lighten-5" cols="12" xl="6" lg="8" md="8" sm="8">
-          <h3>Top Employees</h3>
-          <v-row class="pa-5 flex-row" outlined tile>
-            <v-card
-              width="170"
-              height="170"
-              v-for="e in top10"
-              :key="e.id"
-              class="pa-7 rounded-md card lg-4 mx-2 mb-3"
-              outlined
-              tile
-              align="center"
-            >
-              <div align="center" justify="center">Name: {{ e.name }}</div>
-              <div align="center" justify="center">Age: {{ e.age }}</div>
-              <div align="center" justify="center">Salary: {{ e.salary }}</div>
-            </v-card>
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col class="grey lighten-5" cols="12" xl="6" lg="8" md="8" sm="8">
-          <h3>Top Salary</h3>
-          <v-row class="pa-5 flex-row" outlined tile>
-            <v-card
-              width="170"
-              height="170"
-              class="pa-7 rounded-md card lg-4 mx-2 mb-3 pa-2"
-              outlined
-              tile
-              v-for="ed in employeeListOfDepartment"
-              :key="ed.id"
-            >
-              <div align="center" justify="center">Name: {{ ed.name }}</div>
-              <div align="center" justify="center">Age: {{ ed.age }}</div>
-              <div align="center" justify="center">Salary: {{ ed.salary }}</div>
-            </v-card>
-          </v-row>
+      <v-row>
+        <v-col
+          class="grey lighten-5"
+          cols="12"
+          xl="3" lg="3" md="4" sm="6" xs="2"
+          v-for="e in top10"
+          :key="e.id"
+        >
+          <v-card class="rounded-md card mx-auto mb-auto">
+            <v-card-title style="font-size: 15px">Name: {{ e.name }} <br /> </v-card-title>
+            <v-card-title style="font-size: 15px">Age: {{ e.age }} <br /> </v-card-title>
+            <v-card-title style="font-size: 15px">Salary: {{ e.salary }} <br /> </v-card-title>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
-  </v-main>
+    <h3>Top Salary</h3>
+    <v-container>
+      <v-row>
+        <v-col
+          class="grey lighten-5"
+          cols="12"
+          xl="3" lg="3" md="4" sm="6" xs="2"
+          v-for="e in employeeListOfDepartment"
+          :key="e.id"
+        >
+          <!-- <v-row class="pa-5 flex-row" outlined tile> -->
+          <v-card class="rounded-md card mx-auto mb-auto">
+            <v-card-title style="font-size: 15px">Name: {{ e.name }}</v-card-title>
+            <v-card-title style="font-size: 15px">Age: {{ e.age }}</v-card-title>
+            <v-card-title style="font-size: 15px">Salary: {{ e.salary }}</v-card-title>
+          </v-card>
+          <!-- </v-row> -->
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Employee, { emp } from "../model/Employee";
-import Department, { dep } from "../model/Department";
+import Employee from "../model/Employee";
+import Department from "../model/Department";
+import { evm } from "../view-model/employee-viewmodel";
 import { observer } from "mobx-vue";
 
 @observer
@@ -68,13 +64,13 @@ export default class MainContent extends Vue {
   }
 
   getTopEmployees() {
-    emp.getTopEmployee();
-    this.top10 = emp.top10
+    evm.getTopEmployee();
+    this.top10 = evm.top10;
   }
 
   getEmployeesFromHighestSalaryDepartment() {
-    emp.getEmployeesFromHighestSalaryDepartment();
-    this.employeeListOfDepartment = emp.employeeListOfDepartment
+    evm.getEmployeesFromHighestSalaryDepartment();
+    this.employeeListOfDepartment = evm.employeeListOfDepartment;
   }
 }
 </script>

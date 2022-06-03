@@ -28,9 +28,15 @@
                     required
                   ></v-text-field>
 
+                  <v-alert
+                    v-model="checkLogin" 
+                    type="error"
+                    dismissible
+                  >Username or Password is incorrect</v-alert>                 
+
                   <v-btn
-                    v-on:click="login()"
-                    type="submit"
+                    @click="userLogin()"
+                    
                     class="mt-4"
                     color="primary"
                     value="log in"
@@ -48,22 +54,17 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import VueRouter, { Route } from 'vue-router'
+import { lvm } from "../view-model/login-viewmodel";
 
 @Component
 export default class LoginForm extends Vue {
   username = "";
   password = "";
+  checkLogin = false 
 
-  login() {
-    if (this.username != "" && this.password != "") {
-      if (this.username == "admin" && this.password == "admin") {
-        sessionStorage.setItem("CurAcc", this.username);
-        this.$router.replace({ name: "main" });
-      } else {
-        alert("Username or Password is incorrect")
-      }
-    }
+  userLogin() {
+    this.checkLogin = lvm.check
+    lvm.login(this.username, this.password);
   }
 }
 </script>

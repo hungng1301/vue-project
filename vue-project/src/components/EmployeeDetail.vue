@@ -1,6 +1,9 @@
 <template>
-  <v-main class="grey lighten-2">
-    <v-container class="grey lighten-5">
+  <v-container class="grey lighten-5">
+    <v-alert v-if="checkSuccess==true" type="success" dismissible>
+      Update Successfull
+    </v-alert>
+    <v-form v-model="valid" lazy-validation>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="8" lg="8">
           <v-card ref="form">
@@ -16,6 +19,7 @@
                 v-model="name"
                 label="Full name"
                 placeholder=""
+                :rules="Rules"
                 required
               ></v-text-field>
 
@@ -24,6 +28,7 @@
                 label="Age"
                 placeholder=""
                 required
+                :rules="ageRules"
               ></v-text-field>
 
               <v-text-field
@@ -31,6 +36,7 @@
                 label="Salary"
                 required
                 placeholder=""
+                :rules="Rules"
               ></v-text-field>
 
               <v-text-field
@@ -38,42 +44,56 @@
                 label="Department ID"
                 required
                 placeholder=""
+                :rules="depRules"
               ></v-text-field>
             </v-card-text>
             <v-divider class="mt-12"></v-divider>
             <v-card-actions>
               <router-link :to="{ name: 'employee' }">
-                <v-btn text> Cancel </v-btn>
+                <v-btn text> Back </v-btn>
               </router-link>
 
               <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="update()">
+              <v-btn color="primary" text @click="update(), snackbar=true" :disabled="!valid">
                 Update
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
-  </v-main>
+    </v-form>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Emit, Prop } from "vue-property-decorator";
-import Employee, { emp } from "../model/Employee";
+import Employee from "../model/Employee";
+import {edvm} from "../view-model/empdetail-viewmodel"
 import { observer } from "mobx-vue";
 
 @observer
 @Component
 export default class EmployeeDetail extends Vue {
-  @Prop(Array) readonly employeesList!: Employee[];
-  updateList: Employee[] = []
+  @Prop() readonly employeesList!: Employee[];
+  updateList: Employee[] = [];
 
+  valid = true;
+  checkSuccess = false;
   id = 0;
   name = "";
   age = 0;
   salary = 0;
   departmentId = 0;
+
+  Rules: any[] = [(v: any) => !!v || "This field is required"];
+  ageRules: any[] = [
+    (v: any) => !!v || "Age is required",
+    (v: any) => v > 20 || "Age must older than 20",
+  ];
+  depRules: any[] = [
+    (v: any) => !!v || "Department ID is required",
+    (v: any) => (v > 0 && v <= 3) || "Department ID are 1, 2, 3",
+  ];
 
   created() {
     this.getEmp();
@@ -81,7 +101,7 @@ export default class EmployeeDetail extends Vue {
 
   getEmp() {
     var pId = parseInt(this.$route.params.id);
-    var CurEmp = emp.getEmpById(pId);
+    var CurEmp = edvm.getEmpById(pId);
     this.id = CurEmp!.id;
     this.name = CurEmp!.name;
     this.age = CurEmp!.age;
@@ -99,18 +119,9 @@ export default class EmployeeDetail extends Vue {
       departmentId: this.departmentId,
     };
 
-    if (this.name && this.age && this.salary && this.departmentId) {
-      if (this.age > 20) {
-        this.updateList = emp.updateEmployee(UpdateEmp);
-        alert("Update Successfully");
-        this.$router.push("/employee");
-        return this.updateList
-      } else {
-        alert("Age must be older than 20");
-      }
-    } else {
-      alert("You must fill all text-field");
-    }
+    this.updateList = edvm.updateEmployee(UpdateEmp);
+    this.checkSuccess = true
+    return this.updateList;
   }
 }
 </script>

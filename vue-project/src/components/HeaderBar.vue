@@ -34,7 +34,7 @@
               </router-link>
               <router-link v-else :to="{ name: 'login' }">
                 <v-icon class="ma-5">mdi-logout</v-icon>
-                <span @click="logout()">Logout</span>
+                <span @click="userLogout()">Logout</span>
               </router-link>
             </v-list-item-title>
           </v-list-item>
@@ -46,7 +46,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit, Prop } from "vue-property-decorator";
+import { Vue, Component} from "vue-property-decorator";
+import {lvm} from "../view-model/login-viewmodel"
 import {bus} from "../main";
 
 @Component
@@ -60,8 +61,8 @@ export default class HeaderBar extends Vue {
     bus.$emit('showSider', this.drawer) 
   }
 
-  logout() {
-    sessionStorage.removeItem("CurAcc");
+  userLogout() {
+    lvm.logout()
   }
 }
 </script>

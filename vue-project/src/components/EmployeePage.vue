@@ -40,11 +40,12 @@ import { observer } from "mobx-vue";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import Department, { dep } from "../model/Department";
 import Employee from "../model/Employee";
+import {evm} from "../view-model/employee-viewmodel"
 
 @observer
 @Component
 export default class Employees extends Vue {
-  @Prop(Array) readonly employeesList!: Employee[];
+  @Prop() readonly employeesList!: Employee[];
   departmentList: Department[] = [];
   empListFound: Employee[] = [];
 
@@ -66,13 +67,13 @@ export default class Employees extends Vue {
   }
 
   getEmployeeById(rowEmp: any) {
-    this.$router.push("/employee/" + rowEmp.id);
+    evm.getEmpFromRow(rowEmp)
   }
 
   @Watch("searchInput")
   searchEmp() {
-    dep.search(this.searchInput);
-    this.empListFound = dep.empListFound;
+    evm.search(this.searchInput)
+    this.empListFound = evm.empListFound;
   }
 }
 </script>

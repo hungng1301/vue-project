@@ -16,14 +16,7 @@ const routes: Array<RouteConfig> = [
     children: [
       { path: '', name: 'main', component: MainContent },
       {
-        path: '/employee', name: 'employee', component: Employee, 
-        beforeEnter(to, from, next) {
-          if (sessionStorage.getItem("CurAcc")) {
-            next()
-          } else {
-            next('/login')
-          }
-        }
+        path: '/employee', name: 'employee', component: Employee,
       },
       {
         path: '/employee/:id', name: 'detail', component: EmployeeDetail
@@ -35,13 +28,24 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     component: LoginForm
   },
-
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path != '/login') {
+    if (sessionStorage.getItem('CurAcc')) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
