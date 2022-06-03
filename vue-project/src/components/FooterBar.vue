@@ -2,16 +2,16 @@
   <v-container>
     <v-footer padless>
       <v-row justify="center" no-gutters>
-        <v-btn
-          v-for="l in links"
-          :key="l"
-          color="black"
-          text
-          rounded
-          class="my-2"
-        >
-          {{ l }}
-        </v-btn>
+        <router-link v-for="l in links" :key="l" :to="{ name: l.path }">
+          <v-btn
+            color="black"
+            text
+            rounded
+            class="my-2"
+          >
+            {{ l.title }}
+          </v-btn>
+        </router-link>
         <v-col class="py-4 text-center" cols="12">
           {{ new Date().getFullYear() }} — <strong>VUEJS</strong>
         </v-col>
@@ -21,10 +21,19 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class FooterBar extends Vue {
-  links: any[] = ["Home", "Employee"];
+  links: any[] = [
+    { title: "Home", path: "main" },
+    { title: "Employee", path: "employee" },
+  ];
 }
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

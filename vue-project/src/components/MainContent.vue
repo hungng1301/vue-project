@@ -2,19 +2,28 @@
   <v-container class="grey lighten-5">
     <h3>Top Employees</h3>
     <v-container class="grey lighten-5">
-      <!-- Columns are always 50% wide, on mobile and desktop -->
       <v-row>
         <v-col
           class="grey lighten-5"
           cols="12"
-          xl="3" lg="3" md="4" sm="6" xs="2"
+          xl="3"
+          lg="3"
+          md="4"
+          sm="6"
+          xs="2"
           v-for="e in top10"
           :key="e.id"
         >
           <v-card class="rounded-md card mx-auto mb-auto">
-            <v-card-title style="font-size: 15px">Name: {{ e.name }} <br /> </v-card-title>
-            <v-card-title style="font-size: 15px">Age: {{ e.age }} <br /> </v-card-title>
-            <v-card-title style="font-size: 15px">Salary: {{ e.salary }} <br /> </v-card-title>
+            <v-card-title style="font-size: 15px"
+              >Name: {{ e.name }} <br />
+            </v-card-title>
+            <v-card-title style="font-size: 15px"
+              >Age: {{ e.age }} <br />
+            </v-card-title>
+            <v-card-title style="font-size: 15px"
+              >Salary: {{ e.salary }} <br />
+            </v-card-title>
           </v-card>
         </v-col>
       </v-row>
@@ -25,17 +34,25 @@
         <v-col
           class="grey lighten-5"
           cols="12"
-          xl="3" lg="3" md="4" sm="6" xs="2"
+          xl="3"
+          lg="3"
+          md="4"
+          sm="6"
+          xs="2"
           v-for="e in employeeListOfDepartment"
           :key="e.id"
         >
-          <!-- <v-row class="pa-5 flex-row" outlined tile> -->
           <v-card class="rounded-md card mx-auto mb-auto">
-            <v-card-title style="font-size: 15px">Name: {{ e.name }}</v-card-title>
-            <v-card-title style="font-size: 15px">Age: {{ e.age }}</v-card-title>
-            <v-card-title style="font-size: 15px">Salary: {{ e.salary }}</v-card-title>
+            <v-card-title style="font-size: 15px"
+              >Name: {{ e.name }}</v-card-title
+            >
+            <v-card-title style="font-size: 15px"
+              >Age: {{ e.age }}</v-card-title
+            >
+            <v-card-title style="font-size: 15px"
+              >Salary: {{ e.salary }}</v-card-title
+            >
           </v-card>
-          <!-- </v-row> -->
         </v-col>
       </v-row>
     </v-container>
