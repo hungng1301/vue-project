@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    <!-- <v-card color="grey lighten-4" flex> -->
-    <!-- <v-system-bar color="white"></v-system-bar> -->
     <v-toolbar flat>
       <v-app-bar-nav-icon
         class="d-flex d-lg-none d-xl-none d-md-none"
@@ -41,28 +39,27 @@
         </v-list>
       </v-menu>
     </v-toolbar>
-    <!-- </v-card> -->
   </v-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component} from "vue-property-decorator";
-import {lvm} from "../view-model/login-viewmodel"
-import {bus} from "../main";
+import { Vue, Component } from "vue-property-decorator";
+import { lvm } from "../view-model/login-viewmodel";
+import { bus } from "../main";
 
 @Component
 export default class HeaderBar extends Vue {
   getSession = sessionStorage.getItem("CurAcc");
-  drawer = false
+  drawer = false;
   model = "";
 
   showSider() {
-    this.drawer = true
-    bus.$emit('showSider', this.drawer) 
+    this.drawer = true;
+    bus.$emit("showSider", this.drawer);
   }
 
   userLogout() {
-    lvm.logout()
+    lvm.logout();
   }
 }
 </script>

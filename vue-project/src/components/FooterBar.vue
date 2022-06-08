@@ -2,7 +2,7 @@
   <v-container>
     <v-footer padless>
       <v-row justify="center" no-gutters>
-        <router-link v-for="l in links" :key="l" :to="{ name: l.path }">
+        <router-link v-for="l in links" :key="l.title" :to="{ name: l.path }">
           <v-btn
             color="black"
             text

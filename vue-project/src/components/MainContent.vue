@@ -69,7 +69,7 @@ import { observer } from "mobx-vue";
 @observer
 @Component
 export default class MainContent extends Vue {
-  @Prop(Array) readonly employeesList!: Employee[];
+  @Prop() readonly employeesList!: Employee[];
 
   top10: Employee[] = [];
   employeeListOfDepartment: Employee[] = [];
